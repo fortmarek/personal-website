@@ -5,7 +5,7 @@ module.exports = {
   pathPrefix: '/',
   title: 'Marek Fořt\'s Personal Website',
   subtitle: 'iOS Developer at Ackee. Based in Prague.',
-  copyright: '© All rights reserved.',
+  copyright: 'Copyright © Marek Fořt, 2021',
   disqusShortname: '',
   postsPerPage: 4,
   googleAnalyticsId: 'UA-73379983-2',
