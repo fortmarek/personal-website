@@ -6,7 +6,7 @@ socialImage: "/media/about_me.jpg"
 
 Hi! My name is Marek Fořt and I am thrilled to have you here 🙂
 
-I am currently iOS developer at [Ackee](https://www.ackee.cz/en/). I have passion for open-source, Swift, building *stuff* ✨  - but most importantly of all, helping and talking with people!
+I am currently iOS developer at [Ackee](https://www.ackee.cz/en/). I have passion for open-source, Swift, building _stuff_ ✨ - but most importantly of all, helping and talking with people!
 At the moment, I am living in Prague, so if you ever happen to visit this beautiful city, feel free to approach me and we can have a chat over coffee ☕️
 
 Otherwise, I am fairly active on [Twitter](https://twitter.com/marekfort) and of course you can reach me via [email](marekfort@me.com), too! I am more than happy to talk about anything, it does not have to be Swift or even development-related 🖤
@@ -20,17 +20,17 @@ who is a great person and I have learnt a lot from him.
 
 ![Me at my parents' cottage.](/media/about_me.jpg)
 
-*I also like to have fun.*
+_I also like to have fun._
 
 ## Work & Education 👨‍💻
 
-- **2018-***: Student at [FIT CTU](https://fit.cvut.cz/en) in the field of theoretical informatics 👨‍🎓
-- **2018-***: iOS developer at [Ackee](https://www.ackee.cz/en/)
+- **2018-\***: Student at [FIT CTU](https://fit.cvut.cz/en) in the field of theoretical informatics 👨‍🎓
+- **2018-\***: iOS developer at [Ackee](https://www.ackee.cz/en/)
 - **2017-2018**: Junior iOS developer at [Brightify](https://www.brightify.org/)
 
 ## Speaking 🗣
 
-Speaking is definitely outside of my comfort zone, but definitely looking forward to doing more talks!
+Speaking is something outside of my comfort zone, but definitely looking forward to doing more talks!
 Feel free to approach me if you are looking for someone to talk at your conference.
 
 - 🇨🇭 **[Building Swift CLIs](https://www.youtube.com/watch?v=P_Ld_2U6-KE&t=1s)**: 15.5.2020 @ [AppBuilders](https://appbuilders.ch/)

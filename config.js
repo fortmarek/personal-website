@@ -2,7 +2,7 @@
 
 module.exports = {
   url: 'https://lumen.netlify.com',
-  pathPrefix: '/',
+  pathPrefix: 'marekfort/',
   title: 'Marek Fořt\'s Personal Website',
   subtitle: 'iOS Developer at Ackee. Based in Prague.',
   copyright: 'Copyright © Marek Fořt, 2021',
