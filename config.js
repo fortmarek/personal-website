@@ -18,6 +18,10 @@ module.exports = {
     {
       label: 'About me',
       path: '/pages/about'
+    },
+    {
+      label: 'Reading List',
+      path: '/pages/reading-list'
     }
   ],
   author: {
