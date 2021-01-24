@@ -22,3 +22,7 @@
 
 # Dependency directories
 node_modules/
+
+# Gatsby
+.cache/
+public/
