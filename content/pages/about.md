@@ -1,13 +1,37 @@
 ---
 title: "About me"
 template: "page"
-socialImage: "/media/image-2.jpg"
+socialImage: "/media/about_me.jpg"
 ---
 
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
+Hi! My name is Marek Fořt and I am thrilled to have you here 🙂
 
-![Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.](/media/image-2.jpg)
+I am currently iOS developer at [Ackee](https://www.ackee.cz/en/). I have passion for open-source, Swift, building *stuff* ✨  - but most importantly of all, helping and talking with people!
+At the moment, I am living in Prague, so if you ever happen to visit this beautiful city, feel free to approach me and we can have a chat over coffee ☕️
 
-*Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.*
+Otherwise, I am fairly active on [Twitter](https://twitter.com/marekfort) and of course you can reach me via [email](marekfort@me.com), too! I am more than happy to talk about anything, it does not have to be Swift or even development-related 🖤
 
-Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+I try to work in the open as much as I can - you could checkout my [Github](https://github.com/fortmarek/) to see what I am working on.
+The project I am most active in is [tuist](https://github.com/tuist/tuist) which is a great tool extracting away complexities of Xcode projects,
+letting you focus on actually building your apps.
+
+This project has been a great source of inspiration for me, now I am a proud core maintainer of this repository that was founded by [Pedro](https://twitter.com/pedropbuendia/)
+who is a great person and I have learnt a lot from him.
+
+![Me at my parents' cottage.](/media/about_me.jpg)
+
+*I also like to have fun.*
+
+## Work & Education 👨‍💻
+
+- **2018-***: Student at [FIT CTU](https://fit.cvut.cz/en) in the field of theoretical informatics 👨‍🎓
+- **2018-***: iOS developer at [Ackee](https://www.ackee.cz/en/)
+- **2017-2018**: Junior iOS developer at [Brightify](https://www.brightify.org/)
+
+## Speaking 🗣
+
+Speaking is definitely outside of my comfort zone, but definitely looking forward to doing more talks!
+Feel free to approach me if you are looking for someone to talk at your conference.
+
+- 🇨🇭 **[Building Swift CLIs](https://www.youtube.com/watch?v=P_Ld_2U6-KE&t=1s)**: 15.5.2020 @ [AppBuilders](https://appbuilders.ch/)
+- 🇨🇿 **[Swift CLIs & Tapestry](https://www.youtube.com/watch?v=VoDgSGJ3EgU)**: 10.12.2019 @ [CocoaHeads Prague](https://twitter.com/CocoaHeadsCZ/)
