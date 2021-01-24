@@ -8,13 +8,13 @@ category: "Books"
 tags:
   - "Books"
   - "Design"
-description: "User Friendly book is a great resource understanding what a user friendly design even is, how to make one and how it influences us, as the users."
+description: "User Friendly book is a great resource for understanding what a user friendly design even is, how to make one and how it influences us, as the users."
 socialImage: "/media/user_friendly.jpg"
 ---
 
 ![User Friendly Design book cover.](/media/user_friendly.jpg)
 
-[User Friendly book](https://www.amazon.com/User-Friendly-Hidden-Design-Changing/dp/0374279756) is a great resource understanding what a user friendly design even is, how to make one and how it influences us, as the users.
+[User Friendly book](https://www.amazon.com/User-Friendly-Hidden-Design-Changing/dp/0374279756) is a great resource for understanding what a user friendly design even is, how to make one and how it influences us, as the users.
 
 Here is some of the insights I have gained from this book:
 
