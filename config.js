@@ -18,10 +18,6 @@ module.exports = {
     {
       label: 'About me',
       path: '/pages/about'
-    },
-    {
-      label: 'Contact me',
-      path: '/pages/contacts'
     }
   ],
   author: {
@@ -30,8 +26,8 @@ module.exports = {
     bio: 'iOS Developer at Ackee. Based in Prague.',
     contacts: {
       email: 'marekfort@me.com',
-      twitter: 'https://twitter.com/marekfort',
-      github: 'https://github.com/fortmarek/',
+      twitter: 'marekfort',
+      github: 'fortmarek',
       rss: '',
       vkontakte: '',
       linkedin: '',

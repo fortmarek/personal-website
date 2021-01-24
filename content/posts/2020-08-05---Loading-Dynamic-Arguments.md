@@ -231,3 +231,6 @@ Recap of what we have just achieved:
 3. Parse `.json` and dynamically add its attributes to `ParsableCommand`
 4. Created a Swift CLI with ArgumentParser that can now work with dynamic attributes ✅
 I feel that’s a lot 😉 You can go ahead and play with the final project which you can find here. 
+
+
+*Originally published at [Ackee](https://www.ackee.cz/blog/en/argumentparser-loading-dynamic-arguments/).*
