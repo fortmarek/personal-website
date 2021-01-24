@@ -18,6 +18,7 @@ You can check all of them at one place [here](/category/books/)
 
 ## Currently Reading ⏳
 
+- [Algebra-driven design](https://leanpub.com/algebra-driven-design)
 - [The Art of Doing Science and Engineering: Learning to Learn](https://www.amazon.com/Art-Doing-Science-Engineering-Learning/dp/1732265178)
 
 ## Finished 📚
