@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  url: 'https://lumen.netlify.com',
+  url: 'https://marekfort.netlify.app',
   pathPrefix: 'marekfort/',
   title: 'Marek Fořt\'s Personal Website',
   subtitle: 'iOS Developer at Ackee. Based in Prague.',
