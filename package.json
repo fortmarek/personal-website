@@ -55,7 +55,7 @@
     "gatsby-plugin-offline": "^3.10.0",
     "gatsby-plugin-optimize-svgs": "^1.0.5",
     "gatsby-plugin-react-helmet": "^3.10.0",
-    "gatsby-plugin-sass": "^3.1.0",
+    "gatsby-plugin-sass": "^3.2.0",
     "gatsby-plugin-sharp": "^2.14.1",
     "gatsby-plugin-sitemap": "^2.11.0",
     "gatsby-remark-autolink-headers": "^2.10.0",
@@ -83,7 +83,7 @@
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.12.10",
+    "@babel/core": "7.13.10",
     "@babel/plugin-proposal-class-properties": "7.12.1",
     "@babel/plugin-proposal-optional-chaining": "7.12.7",
     "@babel/plugin-transform-flow-strip-types": "^7.12.10",
