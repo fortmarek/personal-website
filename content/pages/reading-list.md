@@ -18,9 +18,9 @@ You can check all of them at one place [here](/category/books/)
 
 ## Currently Reading ⏳
 
-- [Algebra-driven design](https://leanpub.com/algebra-driven-design)
 - [The Art of Doing Science and Engineering: Learning to Learn](https://www.amazon.com/Art-Doing-Science-Engineering-Learning/dp/1732265178)
 
 ## Finished 📚
 
+- [Algebra-driven design](https://leanpub.com/algebra-driven-design)
 - [User Friendly: How the Hidden Rules of Design Are Changing the Way We Live, Work, and Play](https://www.amazon.com/User-Friendly-Hidden-Design-Changing/dp/0374279756)
