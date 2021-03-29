@@ -77,9 +77,9 @@
     "node-sass": "^5.0.0",
     "normalize-scss": "^7.0.1",
     "prismjs": "^1.23.0",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "react-disqus-comments": "^1.4.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
@@ -111,7 +111,7 @@
     "jest-cli": "26.6.3",
     "lost": "8.3.1",
     "postcss-pxtorem": "5.1.1",
-    "react-test-renderer": "17.0.1",
+    "react-test-renderer": "17.0.2",
     "rimraf": "3.0.2",
     "sass": "^1.32.8",
     "stylelint": "13.12.0",
