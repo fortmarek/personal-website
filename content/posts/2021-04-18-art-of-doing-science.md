@@ -12,7 +12,7 @@ description: "Art of Doing Science and Engineering is a book from the prolific r
 socialImage: "/media/art-of-doing-science.jpg"
 ---
 
-![User Friendly Design book cover.](/media/art-of-doing-science.jpg)
+![Art of Doing Science and Engineering book cover.](/media/art-of-doing-science.jpg)
 
 [Art of Doing Science and Engineering](https://www.amazon.com/Art-Doing-Science-Engineering-Learning/dp/1732265178) is mainly meant for researchers in science or engineering spheres but is a great read even if you are not a researcher (which I am not). While some parts of the book do go into some of the more complicated topics of physics, most of the book is understandable without having deep knowledge of it.
 
