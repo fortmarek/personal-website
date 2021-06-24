@@ -136,6 +136,7 @@ module.exports = {
               maxWidth: 960,
               maxHeight: 800,
               withWebp: true,
+              fit: `inside`,
             },
           },
           {
