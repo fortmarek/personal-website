@@ -4,7 +4,7 @@ module.exports = {
   url: "https://marekfort.netlify.app",
   pathPrefix: "marekfort/",
   title: "Marek Fořt's Personal Website",
-  subtitle: "Production engineer at Shopify. Based in Prague.",
+  subtitle: "Production engineer at Shopify. Based in Berlin.",
   copyright: "Copyright © Marek Fořt, 2021",
   disqusShortname: "",
   postsPerPage: 4,
@@ -27,7 +27,7 @@ module.exports = {
   author: {
     name: "Marek Fořt",
     photo: "/photo.jpg",
-    bio: "Production engineer at Shopify. Based in Prague.",
+    bio: "Production engineer at Shopify. Based in Berlin.",
     contacts: {
       email: "marekfort@me.com",
       twitter: "marekfort",
