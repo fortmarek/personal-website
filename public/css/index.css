@@ -45,7 +45,7 @@ body {
 }
 
 footer {
-	padding-bottom: 2em;
+	padding: 0 1rem 1rem;
 }
 
 footer>a {
