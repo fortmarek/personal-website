@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Importance of dotfiles</title>
+		<meta name="description" content="How to become more effective in your CLI environment by versioning and organizing your dotfiles.">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Marek Fořt">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Marek Fořt">
+		
+		<style>/*
+ Solarized Color Schemes originally by Ethan Schoonover
+ http://ethanschoonover.com/solarized
+
+ Ported for PrismJS by Hector Matos
+ Website: https://krakendev.io
+ Twitter Handle: https://twitter.com/allonsykraken)
+*/
+
+/*
+SOLARIZED HEX
+--------- -------
+base03    #002b36
+base02    #073642
+base01    #586e75
+base00    #657b83
+base0     #839496
+base1     #93a1a1
+base2     #eee8d5
+base3     #fdf6e3
+yellow    #b58900
+orange    #cb4b16
+red       #dc322f
+magenta   #d33682
+violet    #6c71c4
+blue      #268bd2
+cyan      #2aa198
+green     #859900
+*/
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #657b83; /* base00 */
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	background: #073642; /* base02 */
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	background: #073642; /* base02 */
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background-color: #fdf6e3; /* base3 */
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #93a1a1; /* base1 */
+}
+
+.token.punctuation {
+	color: #586e75; /* base01 */
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #268bd2; /* blue */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.url,
+.token.inserted {
+	color: #2aa198; /* cyan */
+}
+
+.token.entity {
+	color: #657b83; /* base00 */
+	background: #eee8d5; /* base2 */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #859900; /* green */
+}
+
+.token.function,
+.token.class-name {
+	color: #b58900; /* yellow */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #cb4b16; /* orange */
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+body {
+	max-width: 40em;
+}
+
+footer {
+	padding-bottom: 2em;
+}
+
+footer>a {
+	font-size: 0.8125em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+	color: #a47b00;
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+	margin-right: 2em;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+
+a[href].header-anchor:focus,
+:hover>a[href].header-anchor {
+	color: #aaa;
+}
+
+h2+.header-anchor {
+	font-size: 1.5em;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Marek Fořt</a>
+		</header>
+
+		<main id="skip">
+			
+<h1>Importance of dotfiles</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-02-14">14 February 2021</time></li>
+	<li><a href="/tags/cli/" class="post-tag">CLI</a>, </li>
+	<li><a href="/tags/oss/" class="post-tag">OSS</a></li>
+</ul>
+
+<p>Recently, during macOS update, my Mac went bust. After some time in the recovery mode I was like &quot;at least I have the Time Machine backup&quot;. I clicked the button to restore from my Time Machine, went to do some other things and after two hours I came to look how it was going. &quot;Time Machine backup failed&quot;. Well, not great. I tried this for the second time with the same result. Since I wanted to do a clean install for some time, I thought that somebody is telling me now is the time. Clean install it is then.</p>
+<p>After I was on my fresh macOS, I wanted to configure my CLI environment. And rather getting back to the unorganized dotfiles mess I had before, I decided to make it properly this time.</p>
+<h1 id="why-you-should-version-your-dotfiles" tabindex="-1">Why you should version your dotfiles <a class="header-anchor" href="#why-you-should-version-your-dotfiles">#</a></h1>
+<p>I spend a <em>lot</em> of time in the CLI, therefore I find it very important that it is setup in a way I like. That is not only because I want the time I spend in my CLI to be pleasant (although, that is absolutely a good reason!) but also to be <em>efficient</em>.</p>
+<p>To achieve that it is important to have a look at your dotfiles.</p>
+<p>While a lot of users do personalize their CLI in some way, it is not at all so common that people version their changes to them. They are also strewn all around the home directory and it is very hard to be sure where you can find what. As a result, this might make it harder for you to make customizations, so in a lot of cases you will not make that small change that might make your life a little better at all. But in the long run this all adds up.</p>
+<p>This was true in my case, too - I had no organization of my dotfiles and often I did not want to make a change because I was worried I might screw it up.</p>
+<p>I have realized sometime ago I should do something with this but I just did not find the time - well, until I had to.</p>
+<h1 id="my-dotfiles" tabindex="-1">My dotfiles <a class="header-anchor" href="#my-dotfiles">#</a></h1>
+<p>Instead of having the dotfiles for myself, I wanted to share them. I started with <a href="https://github.com/holman/dotfiles">dotfiles by Zach Holman</a> and then made adjustments to feel more at home - you can check the repo out <a href="https://github.com/fortmarek/dotfiles">here</a>.</p>
+<p>One of the more notable changes have been adding <code>oh-my-zsh</code> on top of <code>zsh</code>. Why? Well, a) <code>oh-my-zsh</code> has a great selection of themes. b) they have great plugins.</p>
+<p>Some of the plugins I use are:</p>
+<ul>
+<li><a href="https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git">git</a> for speeding up working with git. Want to add unstaged changes with a message? <code>gcam &quot;My commit message&quot;</code>. Want to pull changes? <code>gl</code>. And lots more - I sometimes do use GUI for git but for most common tasks, <code>git</code> CLI helps me to work so much faster.</li>
+<li><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-syntax-highlighting</a> - having quick feedback about what you write in the command line is crucial - there is no reason to see whether your command is valid before you hit that enter =&gt; just leverage the power of auto-highlighting!</li>
+<li><a href="https://github.com/agkozak/zsh-z">z</a>: sometimes, it feels slow navigating in the CLI around different directories. <code>z</code> can make this faster as it saves the directories you <code>cd</code> into and then chooses the most common one. Eg if you often <code>cd</code> into <code>~/.dotfiles</code>, next time you can just run <code>z d</code>. That's it!</li>
+<li><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-autosuggestions</a>: Yes, finding that command you ran two hours ago can be done by hitting arrow up repeatedly. But why make your life difficult if you can just start typing the command and get it completed automatically? Of course you need to know what the command starts with - otherwise, I find it manually via <code>history | grep &quot;keyword&quot;</code> (let me know if there is some awesome plugin for this 😉)</li>
+</ul>
+<p>Apart from <code>oh-my-zsh</code>, I have also added for example keybindings for Xcode - this can be especially helpful if you reinstall Xcode because in that case you'd lose them (happened to me on multiple occassions).</p>
+<h1 id="share" tabindex="-1">Share <a class="header-anchor" href="#share">#</a></h1>
+<p>I am not saying that the dotfiles I have are the best or that they will work for you. The point of this post is to share my experience and encourage you to invest in your environment. Let me know what your dotfiles look like and what has been working for <em>you</em>. Thanks for reading! ✨</p>
+
+<ul class="links-nextprev"><li>Previous: <a href="/blog/user-friendly-design-book/">Review of User Friendly; How the Hidden Rules of Design Are Changing the Way We Live, Work, and Play</a></li><li>Next: <a href="/blog/mnist-maker/">MNIST Maker App</a></li>
+</ul>
+
+		</main>
+
+		<footer>
+			<a href="https://github.com/fortmarek" target="_blank">GitHub</a>
+			<a href="https://mastodon.online/@marekfort" target="_blank">Mastodon</a>
+			<a href="feed/feed.xml" target="_blank">RSS</a>
+		</footer>
+
+		<!-- Current page: /blog/importance-of-dotfiles/ -->
+	</body>
+</html>

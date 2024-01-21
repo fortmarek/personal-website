@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Loading Dynamic Arguments with the new ArgumentParser by Apple</title>
+		<meta name="description" content="Apple has recently announced a new ArgumentParser library that leverages property wrappers and is a great example of a well-written declarative API. But the declarative nature of it comes with some drawbacks – mainly that if you need to do something custom that the library is not built for, you will need to get creative.">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Eleventy Base Blog v8">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Eleventy Base Blog v8">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+	margin-right: 2em;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: #aaa;
+}
+
+h2 + .header-anchor {
+	font-size: 1.5em;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Eleventy Base Blog v8</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About Me</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			
+<h1>Loading Dynamic Arguments with the new ArgumentParser by Apple</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2020-08-05">05 August 2020</time></li>
+	<li><a href="/tags/cli/" class="post-tag">CLI</a>, </li>
+	<li><a href="/tags/argument-parser/" class="post-tag">Argument Parser</a>, </li>
+	<li><a href="/tags/swift/" class="post-tag">Swift</a></li>
+</ul>
+
+<p>Apple has recently announced a new ArgumentParser library that leverages property wrappers and is a great example of a well-written declarative API. But the declarative nature of it comes with some drawbacks – mainly that if you need to do something custom that the library is not built for, you will need to get creative.</p>
+<h2 id="introduction" tabindex="-1">Introduction <a class="header-anchor" href="#introduction">#</a></h2>
+<p>I have recently finished the migration from a parser that is used in TSCUtility library (currently still used by SPM) to the new one for tuist that helps with the maintenance and work with Xcode projects. Most of the migration was smooth 🙇‍♂️ with the exception of one command. That command is called <code>scaffold</code> and let me just quickly introduce it to you. When you run <code>tuist scaffold framework --name FrameworkName</code> it generates a new component in your project from a template called <code>framework</code>. Every template has its own manifest called <code>Template.swift</code> and has its own set of arguments.</p>
+<p>What we want to do is parse <code>tuist scaffold framework</code>, the process that the user is creating a template called <code>framework</code>, then parse the manifest in <code>framework</code> directory and then add its arguments and let the ArgumentParser do the rest for us. Oof, this is a lot, we’ll go through this step-by-step, so don’t worry.</p>
+<h2 id="starting-out" tabindex="-1">Starting out <a class="header-anchor" href="#starting-out">#</a></h2>
+<p>Let’s get our hands dirty with some code 😉 If you want to follow along, you can download the starter project here. If you don’t, that’s fine, too 👍
+This is what our command implementation initially looks like:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">ArgumentParser</span>
+<span class="token keyword">import</span> <span class="token class-name">Foundation</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">Scaffold</span><span class="token punctuation">:</span> <span class="token class-name">ParsableCommand</span> <span class="token punctuation">{</span>
+    <span class="token attribute atrule">@Argument</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">var</span> template<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    
+    <span class="token keyword">func</span> <span class="token function-definition function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">{</span>
+        
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">static</span> <span class="token keyword">func</span> <span class="token function-definition function">preprocess</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> arguments<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Obtaining template name</span>
+        <span class="token keyword">let</span> templateName <span class="token operator">=</span> arguments<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        <span class="token comment">// Based on template name find its manifest</span>
+        <span class="token keyword">let</span> manifestPath <span class="token operator">=</span> <span class="token class-name">FileManager</span><span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">.</span>currentDirectoryPath <span class="token operator">+</span> <span class="token string-literal"><span class="token string">"/</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">templateName</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">/manifest.json"</span></span>
+        <span class="token comment">// Obtain data</span>
+        <span class="token keyword">let</span> data <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">Data</span><span class="token punctuation">(</span>contentsOf<span class="token punctuation">:</span> <span class="token function">URL</span><span class="token punctuation">(</span>fileURLWithPath<span class="token punctuation">:</span> manifestPath<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment">// Parse the attributes</span>
+        <span class="token keyword">let</span> attributes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">JSONDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> from<span class="token punctuation">:</span> data<span class="token punctuation">)</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>attributes<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We are leveraging a custom function <code>preprocess</code> as we want to add the custom arguments before the parsing process starts. This is run before <code>Scaffold.main()</code> with <code>try? Scaffold.preprocess(CommandLine.arguments)</code> in <code>main.swift</code>. To properly handle errors you will need to define a custom <code>main</code> function for <code>ScaffoldCommand</code>, but that is out of scope for this tutorial. <code>Preprocess</code> function now finds <code>manifest.json</code> with the directory from the user input and parses the attributes defined there. In the example project we have an array of <code>[“name”]</code>.</p>
+<p>Let’s now try to run <code>scaffold framework --name FrameworkName</code>. But if you do so, you’ll get the following error: <code>Error: Unexpected argument 'FrameworkName'</code>. If you think about it, it makes sense – we are not defining a <code>--name</code> parameter, therefore the <code>ArgumentParser</code> has no chance to successfully parse the input.
+Note About how ArgumentParser works
+This is where we need to make a little detour to understand how ArgumentParser works under the hood in order to be able to inject our dynamic arguments. What we could boil our command down to is something like this:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">Scaffold</span><span class="token punctuation">:</span> <span class="token class-name">ParsableCommand</span> <span class="token punctuation">{</span>
+    <span class="token attribute atrule">@Argument</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">var</span> template<span class="token punctuation">:</span> <span class="token class-name">String</span>
+<span class="token punctuation">}</span></code></pre>
+<p>As you can see, ArgumentParser is somehow magically able to recognize the arguments you want parsed just from the fact that you declare them with an appropriate property wrapper (in our case <code>@Argument</code>). If you want a full explanation of everything that happens during the parsing process, I’d recommend this great post. But what’s sufficient for us to know is that for every command ArgumentParser initializes <code>ArgumentSet</code>, which is what’s used in the subsequent parsing. If you look into the source code, this is how the initialization looks like:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">extension</span> <span class="token class-name">ArgumentSet</span> <span class="token punctuation">{</span>
+  <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> type<span class="token punctuation">:</span> <span class="token class-name">ParsableArguments</span><span class="token punctuation">.</span><span class="token keyword">Type</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> a<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">ArgumentSet</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Mirror</span><span class="token punctuation">(</span>reflecting<span class="token punctuation">:</span> type<span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span>children
+      <span class="token punctuation">.</span>compactMap <span class="token punctuation">{</span> child <span class="token keyword">in</span>
+        <span class="token keyword">guard</span>
+          <span class="token keyword">var</span> codingKey <span class="token operator">=</span> child<span class="token punctuation">.</span>label<span class="token punctuation">,</span>
+          <span class="token keyword">let</span> parsed <span class="token operator">=</span> child<span class="token punctuation">.</span>value <span class="token keyword">as</span><span class="token operator">?</span> <span class="token class-name">ArgumentSetProvider</span>
+          <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token nil constant">nil</span> <span class="token punctuation">}</span>
+        
+        <span class="token comment">// Property wrappers have underscore-prefixed names</span>
+        codingKey <span class="token operator">=</span> <span class="token class-name">String</span><span class="token punctuation">(</span>codingKey<span class="token punctuation">.</span>first <span class="token operator">==</span> <span class="token string-literal"><span class="token string">"_"</span></span> <span class="token operator">?</span> codingKey<span class="token punctuation">.</span><span class="token function">dropFirst</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> codingKey<span class="token punctuation">.</span><span class="token function">dropFirst</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">let</span> key <span class="token operator">=</span> <span class="token class-name">InputKey</span><span class="token punctuation">(</span>rawValue<span class="token punctuation">:</span> codingKey<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> parsed<span class="token punctuation">.</span><span class="token function">argumentSet</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>additive<span class="token punctuation">:</span> a<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This is the line that interests us the most: <code>let a: [ArgumentSet] = Mirror(reflecting: type.init())</code>. In other words, ArgumentParser iterates through the children of the command’s mirror and that is how it’s able to magically recognize the arguments just from their declaration 🤯</p>
+<h2 id="leveraging-our-new-knowledge" tabindex="-1">Leveraging our New Knowledge <a class="header-anchor" href="#leveraging-our-new-knowledge">#</a></h2>
+<p>With our new findings we should be able to inject our dynamic arguments. To do so we can use <code>CustomReflectable</code> where we will pass our custom array of children. But before doing that we need to save the attributes from <code>manifest.json</code> – however, this is pretty easy:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">static</span> <span class="token keyword">var</span> attributes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token keyword">static</span> <span class="token keyword">func</span> <span class="token function-definition function">preprocess</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> arguments<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">let</span> attributes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">JSONDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> from<span class="token punctuation">:</span> data<span class="token punctuation">)</span>
+    <span class="token class-name">Scaffold</span><span class="token punctuation">.</span>attributes <span class="token operator">=</span> attributes
+<span class="token punctuation">}</span></code></pre>
+<p>We are just saving <code>attributes</code> to its <code>static</code> counterpart. We want it to be <code>static</code> because we have no instance of <code>Scaffold</code> command that we could use. Alas we can now add them to the <code>CustomReflectable</code> protocol implementation:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">extension</span> <span class="token class-name">Scaffold</span><span class="token punctuation">:</span> <span class="token class-name">CustomReflectable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> customMirror<span class="token punctuation">:</span> <span class="token class-name">Mirror</span> <span class="token punctuation">{</span>
+        <span class="token comment">// #1</span>
+        <span class="token keyword">let</span> attributesChildren<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Mirror</span><span class="token punctuation">.</span><span class="token class-name">Child</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Scaffold</span><span class="token punctuation">.</span>attributes
+            <span class="token comment">// #2</span>
+            <span class="token punctuation">.</span>map <span class="token punctuation">{</span>
+                <span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token short-argument">$0</span><span class="token punctuation">,</span> option<span class="token punctuation">:</span> <span class="token class-name">Option</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token operator">></span><span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token punctuation">.</span>shortAndLong<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment">// #3</span>
+            <span class="token punctuation">.</span>map <span class="token punctuation">{</span>
+                <span class="token class-name">Mirror</span><span class="token punctuation">.</span><span class="token class-name">Child</span><span class="token punctuation">(</span>label<span class="token punctuation">:</span> <span class="token short-argument">$0</span><span class="token punctuation">.</span>name<span class="token punctuation">,</span> value<span class="token punctuation">:</span> <span class="token short-argument">$0</span><span class="token punctuation">.</span>option<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token comment">// #4</span>
+        <span class="token keyword">let</span> children <span class="token operator">=</span> <span class="token punctuation">[</span>
+            <span class="token class-name">Mirror</span><span class="token punctuation">.</span><span class="token class-name">Child</span><span class="token punctuation">(</span>label<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"template"</span></span><span class="token punctuation">,</span> value<span class="token punctuation">:</span> _template<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span>
+        <span class="token comment">// #5</span>
+        <span class="token keyword">return</span> <span class="token class-name">Mirror</span><span class="token punctuation">(</span><span class="token class-name">Scaffold</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> children <span class="token operator">+</span> attributesChildren<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Soo, that’s a little bit less straightforward code, but let’s go through it:
+In <code>#1</code> we are just iterating through the <code>attributes</code> array that we have declared. In <code>#2</code> we are initializing a tuple <code>(name: String, option: Option&lt;String&gt;)</code>. <code>name</code> is the name of the attribute, but what is <code>Option&lt;String&gt;</code>? Well, this is the property wrapper that you would normally declare this way:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token attribute atrule">@Option</span><span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token punctuation">.</span>shortAndLong<span class="token punctuation">)</span>
+<span class="token keyword">var</span> name<span class="token punctuation">:</span> <span class="token class-name">String</span></code></pre>
+<p>But we obviously cannot do that, thus we need to initialize it directly. In <code>#3</code> we are then creating the <code>Mirror.Child</code> which is what we return in the end. In <code>#4</code> we are adding our <code>@Argument template</code>. For the value of the child we need to pass <code>_template</code> which is how we get the property itself, not its wrapped value (aka <code>Argument&lt;String&gt;</code>). And finally in <code>#5</code> we are just returning the <code>Mirror</code> itself with our initialized command and children of <code>attributes</code> and <code>template</code>.
+Hopefully, we will now be able to simply run <code>scaffold framework --name FrameworkName</code> and all will go well. But I have bad news – it won’t 😞 If you do, this is the error you will receive:
+&quot;Argument <code>name</code> is defined without a corresponding <code>CodingKey</code>.&quot;
+<code>CodingKey</code>, well, that sounds like somewhere decoding is failing 🤔</p>
+<h2 id="decoding" tabindex="-1">Decoding <a class="header-anchor" href="#decoding">#</a></h2>
+<p>If you look at <code>ParsableCommand</code> protocol definition, you will see that it also conforms to <code>ParsableArgument</code>, which then conforms to <code>Decodable</code>. But what exactly is wrong? Well, in our custom mirror we told the <code>ArgumentParser</code> what arguments it should <em>expect</em>, but it does not parse the values themselves. If we look at our example, we successfully parse our <code>@Argument template</code>, but fail to decode the dynamic <code>--name</code> option. That is because <code>ArgumentParser</code> expects the <code>--name</code> option to be there, but when it gets to decoding it, it does not know how, since it is not defined in the compiler-generated <code>Decodable</code> implementation. But we can fix that 💪 Let’s just define our custom <code>init(from decoder: Decoder) throws</code> method – firstly, without our dynamic arguments:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">enum</span> <span class="token class-name">CodingKeys</span><span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">CodingKey</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> template
+<span class="token punctuation">}</span>
+
+<span class="token keyword">init</span><span class="token punctuation">(</span>from decoder<span class="token punctuation">:</span> <span class="token class-name">Decoder</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> container <span class="token operator">=</span> <span class="token keyword">try</span> decoder<span class="token punctuation">.</span><span class="token function">container</span><span class="token punctuation">(</span>keyedBy<span class="token punctuation">:</span> <span class="token class-name">CodingKeys</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span>
+    template <span class="token operator">=</span> <span class="token keyword">try</span> container<span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span><span class="token class-name">Argument</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token operator">></span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> forKey<span class="token punctuation">:</span> <span class="token punctuation">.</span>template<span class="token punctuation">)</span><span class="token punctuation">.</span>wrappedValue
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Necessary for conforming `ParsableArguments`</span>
+<span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<p>Most of the code might be familiar to you – we define custom <code>CodingKeys</code> <code>enum</code> that contains our <code>template</code> argument and then we decode it as <code>String</code>. Simple! But we are still not handling our custom arguments ☝️</p>
+<p>We’ll add another case to our <code>CodingKeys</code> <code>enum</code> called <code>dynamic(String)</code>. This will encapsulate all our dynamic arguments. Unfortunately, Swift is now not able to automatically convert the individual cases to <code>String</code>. We’ll give it a helping hand:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">enum</span> <span class="token class-name">CodingKeys</span><span class="token punctuation">:</span> <span class="token class-name">CodingKey</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> template
+    <span class="token keyword">case</span> <span class="token keyword">dynamic</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">init</span><span class="token operator">?</span><span class="token punctuation">(</span>stringValue<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">switch</span> stringValue <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token string-literal"><span class="token string">"template"</span></span><span class="token punctuation">:</span>
+            <span class="token keyword">self</span> <span class="token operator">=</span> <span class="token punctuation">.</span>template
+        <span class="token keyword">case</span> stringValue <span class="token keyword">where</span> <span class="token class-name">Scaffold</span><span class="token punctuation">.</span>attributes<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>stringValue<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">self</span> <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token keyword">dynamic</span><span class="token punctuation">(</span>stringValue<span class="token punctuation">)</span>
+        <span class="token keyword">default</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token nil constant">nil</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">var</span> stringValue<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token punctuation">{</span>
+        <span class="token keyword">switch</span> <span class="token keyword">self</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token punctuation">.</span>template<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string-literal"><span class="token string">"template"</span></span>
+        <span class="token keyword">case</span> <span class="token keyword">let</span> <span class="token punctuation">.</span><span class="token keyword">dynamic</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> name
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Not used</span>
+    <span class="token keyword">var</span> intValue<span class="token punctuation">:</span> <span class="token class-name">Int</span><span class="token operator">?</span> <span class="token punctuation">{</span> <span class="token nil constant">nil</span> <span class="token punctuation">}</span>
+    <span class="token keyword">init</span><span class="token operator">?</span><span class="token punctuation">(</span>intValue <span class="token omit keyword">_</span><span class="token punctuation">:</span> <span class="token class-name">Int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token nil constant">nil</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We only need the computed <code>stringValue</code>and custom initializer from <code>stringValue</code>.
+And now the final piece of the puzzle:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token comment">// #1</span>
+<span class="token keyword">var</span> attributes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+
+<span class="token keyword">init</span><span class="token punctuation">(</span>from decoder<span class="token punctuation">:</span> <span class="token class-name">Decoder</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> container <span class="token operator">=</span> <span class="token keyword">try</span> decoder<span class="token punctuation">.</span><span class="token function">container</span><span class="token punctuation">(</span>keyedBy<span class="token punctuation">:</span> <span class="token class-name">CodingKeys</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span>
+    template <span class="token operator">=</span> <span class="token keyword">try</span> container<span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> forKey<span class="token punctuation">:</span> <span class="token punctuation">.</span>template<span class="token punctuation">)</span>
+    <span class="token comment">// #2</span>
+    <span class="token keyword">try</span> <span class="token class-name">Scaffold</span><span class="token punctuation">.</span>attributes<span class="token punctuation">.</span>forEach <span class="token punctuation">{</span> name <span class="token keyword">in</span>
+        attributes<span class="token punctuation">[</span>name<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">try</span> container<span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> forKey<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token keyword">dynamic</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>In <code>#1</code> we define a new property <code>attributes</code> that is a dictionary of <code>[String: String]</code> where the key will be the name of the attribute and the value will be … well, the value from the user input. In <code>#2</code> we iterate through <code>Scaffold.attributes</code> (not to be confused with our new property) and decoding them in a similar fashion as we did with <code>template</code> – now we are just saving our result to our new dictionary.</p>
+<h2 id="finish-line" tabindex="-1">Finish line <a class="header-anchor" href="#finish-line">#</a></h2>
+<p>Yep, we are nearing the finish line 🏁  Let’s make a final addition to our code and add the following to the <code>run</code> function:</p>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">{</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>template<span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>attributes<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now when you run <code>scaffold framework --name MyFramework</code> you will see:</p>
+<pre><code>framework
+[&quot;name&quot;: &quot;FrameworkName&quot;]
+</code></pre>
+<p>And that is exactly what we want, finally 🥳  Now, we could even add a new <code>manifest.json</code> with <code>[&quot;platform&quot;]</code> to the <code>app</code> directory. When we call <code>scaffold app --platform iOS</code> everything still works!
+Recap of what we have just achieved:</p>
+<ol>
+<li>Preprocess our input and recognize the name of template</li>
+<li>Load a <code>.json</code> file in a directory of the preprocessed template</li>
+<li>Parse <code>.json</code> and dynamically add its attributes to <code>ParsableCommand</code></li>
+<li>Created a Swift CLI with ArgumentParser that can now work with dynamic attributes ✅
+I feel that’s a lot 😉 You can go ahead and play with the final project which you can find here.</li>
+</ol>
+<p><em>Originally published at <a href="https://www.ackee.cz/blog/en/argumentparser-loading-dynamic-arguments/">Ackee</a>.</em></p>
+
+<ul class="links-nextprev"><li>Previous: <a href="/blog/fourthpost/">This is my fourth post.</a></li><li>Next: <a href="/blog/importance-of-dotfiles/">Importance of dotfiles</a></li>
+</ul>
+
+		</main>
+
+		<footer></footer>
+
+		<!-- Current page: /blog/2020-08-05---Loading-Dynamic-Arguments/ -->
+	</body>
+</html>
