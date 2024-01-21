@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+Host: https://marekfort.me/
+
+Sitemap: https://marekfort.me/sitemap.xml
