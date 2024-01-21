@@ -47,12 +47,17 @@
 	</url>
 	
 	<url>
-		<loc>https://marekfort.me/</loc>
-		<lastmod>2024-01-20</lastmod>
+		<loc>https://marekfort.me/blog/package-swift-in-raw-xcode-project/</loc>
+		<lastmod>2024-01-21</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://marekfort.me/blog/package-swift-in-raw-xcode-project/</loc>
+		<loc>https://marekfort.me/</loc>
+		<lastmod>2024-01-21</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://marekfort.me/tags/</loc>
 		<lastmod>2024-01-21</lastmod>
 	</url>
 	
@@ -87,6 +92,11 @@
 	</url>
 	
 	<url>
+		<loc>https://marekfort.me/tags/tuist/</loc>
+		<lastmod>2024-01-21</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://marekfort.me/tags/argument-parser/</loc>
 		<lastmod>2024-01-21</lastmod>
 	</url>
@@ -97,22 +107,12 @@
 	</url>
 	
 	<url>
-		<loc>https://marekfort.me/tags/tuist/</loc>
-		<lastmod>2024-01-21</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://marekfort.me/tags/design/</loc>
-		<lastmod>2024-01-21</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://marekfort.me/tags/swift-package-manager/</loc>
 		<lastmod>2024-01-21</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://marekfort.me/tags/</loc>
+		<loc>https://marekfort.me/tags/design/</loc>
 		<lastmod>2024-01-21</lastmod>
 	</url>
 </urlset>
