@@ -1,6 +1,6 @@
 ---
 title: Compiling Package.swift in a raw Xcode project
-date: "2024-01-21"
+date: "2024-01-22"
 tags:
   - "Tuist"
   - "Swift"
