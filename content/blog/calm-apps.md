@@ -30,7 +30,7 @@ Sure, Signal might not have fancy animations and features like Telegram, but I f
 
 #### FlyLeaf
 
-I started to use [FlyLeaf](https://moehrenzahn.de/project/flyleaf) relatively recently. Before I was using Pocket and it was _fine_ but I never got to really liking the app. FlyLeaf is a project of passion with focus on the best experience of _reading articles_ and it's amazing at that. Yoiu get the theme at this point, right? On to the last one.
+I started to use [FlyLeaf](https://moehrenzahn.de/project/flyleaf) relatively recently. Before I was using Pocket and it was _fine_ but I never got to really liking the app. FlyLeaf is a project of passion with focus on the best experience of _reading articles_ and it's amazing at that. You get the theme at this point, right? On to the last one.
 
 #### Ivory
 
