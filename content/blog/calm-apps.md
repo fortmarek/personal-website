@@ -34,7 +34,7 @@ I started to use [FlyLeaf](https://moehrenzahn.de/project/flyleaf) relatively re
 
 #### Ivory
 
-Last but not least, my favorite Mastodon client, Ivory. I used Tapbot before Twitter became what it is and Ivory has been perfect. Developed by a small, but mighty team, the app really sets the bar for what timeline-based, native apps shoud look like.
+Last but not least, my favorite Mastodon client, Ivory. I used Tweetbot before Twitter became what it is and Ivory has been perfect. Developed by a small, but mighty team, the app really sets the bar for what timeline-based, native apps shoud look like.
 
 #### More calm apps
 
