@@ -95,7 +95,7 @@ Why is this happening? Let's take a look at the `DynamicFramework` and `App` sou
 
 The only file of the `DynamicFramework` has the following content:
 
-```
+```swift
 // DynamicFramework.swift
 import Foundation
 import StaticFramework
@@ -111,7 +111,7 @@ public enum DynamicFramework {
 
 And `App`'s `CustomView.swift` looks like this:
 
-```
+```swift
 // AppDelegate.swift
 import Foundation
 import UIKit
