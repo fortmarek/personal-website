@@ -62,7 +62,7 @@ However, at some point, we had the need to start using a `LiveView`. Hiding elem
 
 ## Using Phoenix Hooks
 
-Ok, when `<script>` doesn't cut it, we need to turn to Phoenix JS primitives. This actually felt like a great use case for [Phoenix hooks](https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook). We could define a `PlatformSpecificVisibility` to conditionally render the HTML components – and because the hook would be run when the component mounts, we no longer would have to depend on the timeouts.
+Ok, when `<script>` doesn't cut it, we need to turn to Phoenix JS primitives. This actually felt like a great use case for [Phoenix hooks](https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook). We could define a `PlatformSpecificVisibility` hook to conditionally render the HTML components – and because the hook would be run when the component mounts, we no longer would have to depend on the timeouts.
 
 The hook could be implemented as such:
 ```javascript
@@ -157,3 +157,5 @@ As mentioned in this [post](https://fly.io/phoenix-files/pass-user-agent-info-to
 ```
 
 And that's it! We now have a solution that doesn't rely on JavaScript and doesn't flash any content 🎉
+
+Is there a better way? Maybe – let me know if you have any suggestions, I am still relatively early in my Phoenix journey 😌
