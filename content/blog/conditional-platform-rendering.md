@@ -14,7 +14,7 @@ To be able to test changes, we have generally two options, both useful. Note the
 
 The easier and quicker way to test our changes is to override the user agent in the browser. In Firefox, you can go to `about:config` and update the `general.useragent.override` option to the user agent you want to test. For an iOS device, an example user agent could be `Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1`.
 
-The second option is to use view the page directly on the mobile device – that's not always needed, but recommended for more complex features. To test your changes on a real device using your locally running server, you first need to grab your IP address. On macOS, you can copy your address from `System Preferences > Network > Wi-Fi details`.
+The second option is to view the page directly on the mobile device – that's not always needed, but recommended for more complex features. To test your changes on a real device using your locally running server, you first need to grab your IP address. On macOS, you can copy your address from `System Preferences > Network > Wi-Fi details`.
 
 Additionally, you need to update your `config/dev.exs` file to run at `0.0.0.0` instead of `127.0.0.1` which is the default value:
 ```elixir
@@ -58,11 +58,11 @@ What we started with was a static HTML component and a pure JavaScript solution 
 
 In short, we read the platform from the user agent and then hide the appropriate element based on the platform. This was a quick and easy solution which worked well!
 
-However, at some point, we had the need to start using a `LiveView`. Hiding element in `<script>` in a `LiveView` _won't work_ as it's not given that the elements are not present when the script runs. We could hide the elements after a given timeout, but that leads to layout shifts, which is not what we wanted.
+However, at some point, we had the need to start using a `LiveView`. Hiding element in `<script>` in a `LiveView` _won't work_ as it's not given that the elements are present when the script runs. We could hide the elements after a given timeout, but that leads to content flashing.
 
 ## Using Phoenix Hooks
 
-Ok, when `<script>` doesn't cut it, we need to turn to Phoenix JS primitives. This actually felt like a great use case for [Phoenix hooks](https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook). We could define a `PlatformSpecificVisibility` hook to conditionally render the HTML components – and because the hook would be run when the component mounts, we no longer would have to depend on the timeouts.
+Ok, when `<script>` doesn't cut it, we need to turn to Phoenix JS primitives. This actually felt like a great use case for [Phoenix hooks](https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook). We could define a `PlatformSpecificVisibility` hook to conditionally render the HTML components – and because the hook would be run when the component mounts, we no longer would have to depend on timeouts.
 
 The hook could be implemented as such:
 ```javascript
@@ -116,7 +116,7 @@ The HTML components could then be implemented as such:
 />
 ```
 
-And this works great! But since the JavaScript kicks in only _after_ the component has mounted, we still get a flash of the content. We could hide the buttons by default to make that less intrusive – but still not great.
+And this works great! But since the JavaScript kicks in only _after_ the component has mounted, we still get a flash of the content. We could hide the buttons by default to make that less intrusive – but still, not great.
 
 ## Reading the user agent at the `LiveView` level
 
