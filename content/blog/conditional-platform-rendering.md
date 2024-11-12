@@ -6,6 +6,8 @@ description: "Three ways to conditionally render HTML components based on the ag
 
 For [Tuist Previews](https://docs.tuist.dev/en/guides/share/previews#previews), we needed to conditionally render a button – on desktop, users would be able to run a Preview using the [Tuist macOS app](https://docs.tuist.dev/en/guides/share/previews#tuist-macos-app). On mobile devices, users should be able to install the app directly.
 
+Let's take a look at three ways we could achieve that in Phoenix applications.
+
 ## Setting up development environment on macOS
 
 To be able to test changes, we have generally two options, both useful. Note the following steps are for macOS-specific.
