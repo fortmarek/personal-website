@@ -1,7 +1,7 @@
 ---
 title: CSS box-sizing on mobile
 date: "2024-11-16"
-description: "CSS box-sizing to the rescue when your content unexpectedly scrolls horizontally"
+description: "How default CSS box-sizing behavior caused content to overflow horizontally on mobile devices"
 ---
 
 When working on Tuist previews, I was checking out the website on mobile and noticed that the content was scrolling horizontally – but it took me a bit before I figured out why.
