@@ -6,7 +6,7 @@ description: "CSS box-sizing to the rescue when your content unexpectedly scroll
 
 When working on Tuist previews, I was checking out the website on mobile and noticed that the content was scrolling horizontally – but it took me a bit before I figured out why.
 
-The screen ended up looking like this:
+The screen initially looked like this:
 
 <img src="/img/css-box-sizing/preview-with-scrolling-indicator.png" width=300px alt="Screenshot of iPhone simulator with horizontal scrolling indicator at the bottom"></img>
 
@@ -38,7 +38,7 @@ Commenting out either `padding` or `width` would fix the content overflowing the
 
 ## CSS box-sizing
 
-Turns out, my mental model of how the `width` in CSS is computed was not in line with the default. As described in the [docs](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) for `box-sizing`, the default behavior is `content-box`: "If you set an element's width to 100 pixels, then the element's content box will be 100 pixels wide, and the width of any border or padding will be added to the final rendered width, making the element wider than 100px." In other words, CSS computes the width of the element based on the content and the padding and border are added as extra to the final width.
+Turns out, my mental model of how the `width` in CSS is computed was not in line with the default. As described in the [docs](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) for `box-sizing`, the default behavior is `content-box`: "If you set an element's width to 100 pixels, then the element's content box will be 100 pixels wide, and the width of any border or padding will be added to the final rendered width, making the element wider than 100px." In other words, CSS computes the width of the element based on the content, the padding and border are then added as extra to the final width.
 
 To get, in my opinion more intuitive behavior, you can set `box-sizing: border-box` which tells the browser to include the padding and border in the width of the element. Some folks actually make this property the default for all elements in their CSS resets, like [Josh Comeau](https://www.joshwcomeau.com/css/custom-css-reset/#one-box-sizing-model-2):
 ```css
@@ -57,6 +57,6 @@ Sure enough, if you compare Josh's example to my code, it boils down to the same
 
 Note how the inner box is smaller than the outer one even though its width is set to 100%.
 
-If the same reset is added to my example (or directly to the `preview__metadata` class), our Tuist Preview page has padding with no horizontal overflow:
+If the same reset is added to my example (or `box-sizing: border-box` is set directly to the `preview__metadata` class), our Tuist Preview page has padding with no horizontal overflow:
 
 <img src="/img/css-box-sizing/preview-with-no-overflow.png" width=300px alt="Screenshot of iPhone simulator with padding between the content and the viewport"></img>
