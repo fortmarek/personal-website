@@ -55,6 +55,8 @@ Sure enough, if you compare Josh's example to my code, it boils down to the same
 </p>
 <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 
+Note how the inner box is smaller than the outer one even though its width is set to 100%.
+
 If the same reset is added to my example (or directly to the `preview__metadata` class), our Tuist Preview page has padding with no horizontal overflow:
 
 <img src="/img/css-box-sizing/preview-with-no-overflow.png" width=300px alt="Screenshot of iPhone simulator with padding between the content and the viewport"></img>
