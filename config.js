@@ -29,7 +29,7 @@ module.exports = {
     photo: "/photo.jpg",
     bio: "Production engineer at Shopify. Based in Berlin.",
     contacts: {
-      email: "marekfort@me.com",
+      email: "mail@marekfort.me",
       twitter: "marekfort",
       github: "fortmarek",
       rss: "",

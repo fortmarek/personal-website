@@ -31,6 +31,6 @@ Choosing these technologies made it really fun to write the app - and I believe 
 
 ## Additional Reading
 
-This post is only a quick overview - I go down into the nitty-gritty details in my thesis that you can download from [here](https://github.com/fortmarek/bachelor-thesis/blob/master/thesis.pdf). You can also check out the app [here](https://github.com/fortmarek/automata-editor/). I do plan to publish it on the App Store but there are some minor improvements I want to make before doing so - I can send you an invite to TestFlight if you are interested, though. You can either send me a DM on [Twitter](https://twitter.com/marekfort) or send me an [email](mailto:marekfort@me.com). If you want to check out the ML model, you can do so [here](https://github.com/fortmarek/automata-editor-model/).
+This post is only a quick overview - I go down into the nitty-gritty details in my thesis that you can download from [here](https://github.com/fortmarek/bachelor-thesis/blob/master/thesis.pdf). You can also check out the app [here](https://github.com/fortmarek/automata-editor/). I do plan to publish it on the App Store but there are some minor improvements I want to make before doing so - I can send you an invite to TestFlight if you are interested, though. You can either send me a DM on [Twitter](https://twitter.com/marekfort) or send me an [email](mailto:mail@marekfort.me). If you want to check out the ML model, you can do so [here](https://github.com/fortmarek/automata-editor-model/).
 
 I'd also appreciate any feedback and thanks for reading!
