@@ -34,6 +34,6 @@ Fortunately, Apple at least did consider that there might be good use cases when
 xcrun pngcrush -revert-iphone-optimizations iphone-optimized.png standard.png
 ```
 
-And just like that, we actually get back a _normal_ PNG image 🎉 And that's exactly how we fixed the issue in the Tuist CLI: https://github.com/tuist/tuist/pull/7705
+And just like that, we actually get back a _normal_ PNG image 🎉 And that's exactly how we fixed the issue in the Tuist CLI: [#7705](https://github.com/tuist/tuist/pull/7705)
 
 At the end of the day, I'm sure at the time there were good reasons to do these PNG adjustments – but I do wish Apple made it obvious and came up with a custom extension instead of reusing the PNG extension for a file that's not a standard PNG and fails to load in most apps not owned by Apple.
