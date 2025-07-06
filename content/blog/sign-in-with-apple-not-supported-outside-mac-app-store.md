@@ -12,9 +12,8 @@ At Tuist, we have a [macOS](https://docs.tuist.dev/en/guides/features/previews#t
 When adding support for Sign in with Apple, one needs to add an entitlement with the appropriate capability. And since the iOS and macOS codebase have common foundations, we implicitly added this capability to macOS. I haven't fully realized this as at the time since I was not adding an explicit Sign in with Apple button in macOS.
 
 Things only started to fail when trying to release the macOS app:
-```
-Provisioning profile "Tuist macOS Distribution" doesn't support the Sign in with Apple capability.  (in target 'TuistApp' from project 'TuistApp')
-```
+
+> Provisioning profile "Tuist macOS Distribution" doesn't support the Sign in with Apple capability. (in target 'TuistApp' from project 'TuistApp')
 
 ## Finding the issue
 
